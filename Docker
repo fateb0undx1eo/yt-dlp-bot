@@ -1,0 +1,18 @@
+FROM python:3.10-slim
+
+# Install ffmpeg and other dependencies
+RUN apt-get update && \
+    apt-get install -y ffmpeg git && \
+    apt-get clean
+
+# Set working directory
+WORKDIR /app
+
+# Copy all source code
+COPY . .
+
+# Install Python dependencies manually
+RUN pip install yt-dlp python-telegram-bot==13.15 pyyaml
+
+# Run the bot
+CMD ["python", "main.py"]
